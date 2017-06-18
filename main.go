@@ -2,8 +2,8 @@ package main
 
 import (
 	"gopkg.in/urfave/cli.v1"
+	"github.com/stackimpact/stackimpact-go"
 	"os"
-	"log"
 )
 
 func main() {
@@ -43,9 +43,26 @@ func main() {
 			Usage:       "JWT secret for sessions.",
 			Destination: &config.JwtSecret,
 		},
+		cli.StringFlag{
+			Name:        "stack_name",
+			Value:       "spartan-io",
+			Usage:       "Stack impact agent name.",
+			Destination: &config.StackImpactName,
+		},
+		cli.StringFlag{
+			Name:        "stack_key",
+			Usage:       "Stack impact agent key.",
+			Destination: &config.StackImpactName,
+		},
 	}
 	app.Action = func(c *cli.Context) {
-		log.Printf("%+v\n", config)
+		if config.StackImpactKey != "" && config.StackImpactName != "" {
+			_ = stackimpact.Start(stackimpact.Options{
+				AgentKey: config.StackImpactKey,
+				AppName: config.StackImpactName,
+			})
+		}
+
 		server(config)
 	}
 

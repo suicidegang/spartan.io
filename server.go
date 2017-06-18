@@ -13,6 +13,8 @@ type ServerOptions struct {
 	MgoAddress string
 	MgoDB string
 	JwtSecret  string
+	StackImpactName string
+	StackImpactKey string
 }
 
 func server(config ServerOptions) {
