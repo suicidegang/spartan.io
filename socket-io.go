@@ -6,7 +6,6 @@ import (
 
 	"log"
 	"time"
-	"strconv"
 )
 
 func socketIo(events <-chan Event, auth Auth) *socketio.Server {
@@ -78,20 +77,6 @@ func socketIo(events <-chan Event, auth Auth) *socketio.Server {
 	go func() {
 		for event := range events {
 			server.BroadcastTo(event.Room, event.Event, event.Message)
-		}
-	}()
-
-	go func() {
-		fake := time.Tick(1 * time.Second)
-		count := 0
-
-		for {
-			<-fake
-			count++
-
-			m := anonymousMessage("fake message " + strconv.Itoa(count))
-			packed := list(m)
-			server.BroadcastTo("chat", "chat dia-de-hueva", packed)
 		}
 	}()
 
