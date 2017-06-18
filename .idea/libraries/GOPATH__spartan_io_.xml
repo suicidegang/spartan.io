@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;spartan.io&gt;">
+    <CLASSES>
+      <root url="file:///opt/gopath/src/9fans.net" />
+      <root url="file:///opt/gopath/src/sourcegraph.com" />
+      <root url="file:///opt/gopath/src/gopkg.in" />
+      <root url="file:///opt/gopath/src/cellar" />
+      <root url="file:///opt/gopath/src/github.com" />
+      <root url="file:///opt/gopath/src/golang.org" />
+    </CLASSES>
+    <SOURCES>
+      <root url="file:///opt/gopath/src/9fans.net" />
+      <root url="file:///opt/gopath/src/sourcegraph.com" />
+      <root url="file:///opt/gopath/src/gopkg.in" />
+      <root url="file:///opt/gopath/src/cellar" />
+      <root url="file:///opt/gopath/src/github.com" />
+      <root url="file:///opt/gopath/src/golang.org" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
