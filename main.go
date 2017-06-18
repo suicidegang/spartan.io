@@ -52,12 +52,13 @@ func main() {
 		cli.StringFlag{
 			Name:        "stack_key",
 			Usage:       "Stack impact agent key.",
-			Destination: &config.StackImpactName,
+			Destination: &config.StackImpactKey,
 		},
 	}
 	app.Action = func(c *cli.Context) {
 		if config.StackImpactKey != "" && config.StackImpactName != "" {
-			_ = stackimpact.Start(stackimpact.Options{
+			agent := stackimpact.NewAgent()
+			agent.Start(stackimpact.Options{
 				AgentKey: config.StackImpactKey,
 				AppName: config.StackImpactName,
 			})
