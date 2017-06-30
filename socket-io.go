@@ -5,7 +5,6 @@ import (
 	"github.com/gorilla/context"
 
 	"log"
-	"time"
 )
 
 func socketIo(events <-chan Event, auth Auth) *socketio.Server {
@@ -35,11 +34,10 @@ func socketIo(events <-chan Event, auth Auth) *socketio.Server {
 			return
 		}
 
-		// Rate limiter per client.
-		shortRate := time.Tick(time.Millisecond * 250)
-
 		so.On("chat send", func(channel, message string) {
-			<-shortRate
+			if len(message) == 0 || len(channel) == 0 {
+				return
+			}
 
 			m := userMessage(user, message)
 			packed := list(m)
@@ -47,7 +45,7 @@ func socketIo(events <-chan Event, auth Auth) *socketio.Server {
 			log.Printf("Incoming chat: %s - %s\n", channel, message)
 
 			// Broadcast to other clients in the pool.
-			so.BroadcastTo("chat", "chat " + channel, packed)
+			so.BroadcastTo("chat", "chat "+channel, packed)
 
 			// Send to the history channel.
 			history <- PackedMessage{channel, m}
@@ -57,7 +55,7 @@ func socketIo(events <-chan Event, auth Auth) *socketio.Server {
 			messages := lastMessages(channel)
 			if len(messages) > 0 {
 				packed := list(messages...)
-				so.Emit("chat " + channel, packed)
+				so.Emit("chat "+channel, packed)
 			}
 		})
 
